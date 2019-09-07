@@ -1,0 +1,43 @@
+version: "2"
+
+services:
+  mysql:
+    container_name: "MySQL8"
+    image: "mysql:8"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "test-mysql-python3"
+      MYSQL_ROOT_PASSWORD: "passwd"
+      MYSQL_USER: "python3"
+      MYSQL_PASSWORD: "passwd"
+    restart: "always"
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    networks:
+      - python-mysql-net
+
+  python3:
+    container_name: "python3"
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    # python3のコンテナが終了しないよう、無限にスリープさせた状態にする。
+    command: sleep infinity
+    networks:
+      - python-mysql-net
+    expose:
+      - "8000"
+      - "8888"
+    ports:
+      - "58000:8000"
+      - "58888:8888"
+    # local側の作業ディレクトリを、コンテナ側の"/workspace"にマッピングする。
+    volumes:
+      - ..:/workspace
+
+networks:
+  python-mysql-net:
+    driver: "bridge"

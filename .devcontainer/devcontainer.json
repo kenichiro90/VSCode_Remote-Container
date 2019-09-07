@@ -1,0 +1,29 @@
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"name": "Python3 & MySQL8",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "python3",
+	"workspaceFolder": "/workspace",
+	
+	// Use 'settings' to set *default* container specific settings.json values on container create. 
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.pythonPath": "/usr/bin/python3",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintArgs": ["--extension-pkg-whitelist=PyQt5", "--disable=all", "--enable=F,E,W"]
+	},
+
+	// Uncomment the next line if you want start specific services in your Docker Compose config.
+	// "runServices": [],
+
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	// "shutdownAction": "none",
+
+	// Uncomment the next line to run commands after the container is created.
+	// "postCreateCommand": "docker --version"
+
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	"extensions": ["coenraads.bracket-pair-colorizer", "ms-python.python", "mechatroner.rainbow-csv"]
+}
