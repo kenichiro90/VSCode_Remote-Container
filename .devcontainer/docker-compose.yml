@@ -2,42 +2,49 @@ version: "2"
 
 services:
   mysql:
-    container_name: "MySQL8"
-    image: "mysql:8"
+    container_name: MySQL8
+    image: mysql:8
+    # MySQLの認証方式を変更
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: "test-mysql-python3"
-      MYSQL_ROOT_PASSWORD: "passwd"
-      MYSQL_USER: "python3"
-      MYSQL_PASSWORD: "passwd"
-    restart: "always"
+      MYSQL_DATABASE: test-mysql-python3
+      MYSQL_ROOT_PASSWORD: passwd
+      MYSQL_USER: python3
+      MYSQL_PASSWORD: passwd
+    restart: always
+    # ポートの開放 & ポートフォワーディング
+    #   MySQL: 3306
     expose:
-      - "3306"
+      - 3306
     ports:
-      - "3306:3306"
+      - 3306:3306
+    # コンテナ間通信(mysql <-> python3)の設定
     networks:
-      - python-mysql-net
+      - mysql-python3-network
 
   python3:
-    container_name: "python3"
+    container_name: python3
     build:
-      context: "./"
-      dockerfile: "Dockerfile"
-    # python3のコンテナが終了しないよう、無限にスリープさせた状態にする。
+      context: ./
+      dockerfile: Dockerfile
+    # python3のコンテナが終了しないよう、スリープ状態のままにする。
     command: sleep infinity
     networks:
-      - python-mysql-net
+      - mysql-python3-network
+    # ポートの開放 & ポートフォワーディング
+    #   Django: 8000
+    #   Jupyter Notebook: 8888
     expose:
-      - "8000"
-      - "8888"
+      - 8000
+      - 8888
     ports:
-      - "58000:8000"
-      - "58888:8888"
-    # local側の作業ディレクトリを、コンテナ側の"/workspace"にマッピングする。
+      - 8000:8000
+      - 8888:8888
+    # localの作業ディレクトリを、コンテナの"/workspace"にマウントする。
     volumes:
       - ..:/workspace
 
 networks:
-  python-mysql-net:
-    driver: "bridge"
+  mysql-python3-network:
+    driver: bridge

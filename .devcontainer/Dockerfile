@@ -8,9 +8,9 @@ ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt update
-RUN apt install -y python3 python3-pip python3-venv less vim net-tools iputils-ping mysql-client
+RUN apt install -y python3 python3-pip python3-venv iputils-ping less mysql-client net-tools vim
 RUN pip3 install --no-cache-dir --upgrade pip
-RUN pip3 install --no-cache-dir pylint numpy scipy pandas matplotlib jupyter django mysql-connector-python-rf
+RUN pip3 install --no-cache-dir pylint jupyter matplotlib numpy pandas scipy django mysql-connector-python-rf
 
 # Create a non-root user to use
 RUN groupadd --gid $USER_GID $USERNAME

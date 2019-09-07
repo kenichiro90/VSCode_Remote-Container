@@ -2,13 +2,16 @@
 {
 	"name": "Python3 & MySQL8",
 	"dockerComposeFile": "docker-compose.yml",
+	// リモート環境で接続するサービス名(docker-compose.yml, services)を、ここに書く。
 	"service": "python3",
+	// コンテナ上の作業ディレクトリ(docker-compose.yml, python3:volumes)
 	"workspaceFolder": "/workspace",
 	
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",
+		// python環境の設定
 		"python.pythonPath": "/usr/bin/python3",
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": true,
@@ -25,5 +28,6 @@
 	// "postCreateCommand": "docker --version"
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
+	// リモート環境で使用する拡張機能を、ここに書く。
 	"extensions": ["coenraads.bracket-pair-colorizer", "ms-python.python", "mechatroner.rainbow-csv"]
 }
