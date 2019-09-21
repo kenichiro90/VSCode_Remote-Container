@@ -68,7 +68,7 @@ EXPOSE 8888
 
 細かい説明は割愛しますが、docker-compose.ymlの内容は、以下の通りです。
 
-```Docker
+```yaml
 version: "2"
 
 services:
